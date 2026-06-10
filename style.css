@@ -148,6 +148,21 @@ section h2 {
     box-shadow: 0 12px 26px rgba(0,0,0,0.12);
 }
 
+.project-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card p {
+    margin-bottom: 12px;
+}
+
+.project-card .btn {
+    padding: 8px 14px;
+    font-size: 0.95rem;
+    align-self: flex-start;
+}
+
 /* Skills */
 .skills-container {
     display: flex;
