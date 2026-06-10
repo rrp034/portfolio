@@ -88,21 +88,50 @@
     <section id="contact">
         <h2>Contact Me</h2>
 
-        <form>
-            <input type="text" placeholder="Your Name" required>
-            <input type="email" placeholder="Your Email" required>
-            <textarea rows="5" placeholder="Your Message"></textarea>
+        <form id="contact-form">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
             <button type="submit">Send Message</button>
         </form>
     </section>
 
     <footer>
         <p>&copy; 2026 Rowdy Phillips. All Rights Reserved.</p>
-    </footer>
+        </footer>
 
-       
+        <script>
+        (function(){
+            const form = document.getElementById('contact-form');
+            if (!form) return;
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const data = {
+                    name: form.querySelector('input[name="name"]').value,
+                    email: form.querySelector('input[name="email"]').value,
+                    message: form.querySelector('textarea[name="message"]').value
+                };
 
-    </section>
+                try {
+                    const res = await fetch('/contact', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+
+                    if (res.ok) {
+                        alert('Message sent — thank you!');
+                        form.reset();
+                    } else {
+                        const json = await res.json().catch(()=>({}));
+                        alert('Failed to send message: ' + (json.error || res.statusText));
+                    }
+                } catch (err) {
+                    alert('Error sending message. Make sure the backend is running.');
+                }
+            });
+        })();
+        </script>
 
 </body>
 </html>
